@@ -24,7 +24,7 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
         }else{
             return DomainAccountBox.findAll({
                 where:{
-                    boxMac:oneBox.boxMac,
+                    boxSN:oneBox.boxSN,
                     status:true
                 }
             }).then((array) => {
@@ -36,7 +36,7 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
                 }else{
                     return DomainAccountBox.create({
                         account:account.id,
-                        boxMac:oneBox.boxMac,
+                        boxSN:oneBox.boxSN,
                         boxCode:oneBox.boxCode,
                         status:true
                     }).then((date)=>{
@@ -53,18 +53,18 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
 
 //解除绑定设备
 ModelAccountBox.delAccountBox = function delAccountBox(account,body) {
-    let boxMac = body.boxMac;
+    let boxSN = body.boxSN;
     return DomainAccountBox.findAll({
         where:{
             account:account.id,
-            boxMac:boxMac,
+            boxSN:boxSN,
             status:true
         }
     }).then((array) => {
         if(array.length>0){
             return DomainAccountBox.update({
                 account:account.id,
-                boxMac:boxMac,
+                boxSN:boxSN,
                 status:false
             }).then((date)=>{
                 return {

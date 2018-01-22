@@ -75,11 +75,11 @@ model.DomainAccountMiner = sequelize.define("t_account_miner", {
 });
 
 model.DomainBox = sequelize.define("t_box", {
-    boxMac: {
+    boxSN: {
         type: Sequelize.STRING,
         unique: true
     },
-    boxCode: {
+    boxMac: {
         type: Sequelize.STRING,
         unique: true
     },
@@ -106,7 +106,7 @@ model.DomainAccountBox = sequelize.define("t_box_account", {
     account: {
         type: Sequelize.STRING
     },
-    boxMac: {
+    boxSN: {
         type: Sequelize.STRING
     },
     status: {//绑定 解绑
@@ -136,10 +136,7 @@ model.DomainCoinEveryDay = sequelize.define("t_coin_everyday", {
     account: {
         type: Sequelize.STRING
     },
-    boxMac: {
-        type: Sequelize.STRING
-    },
-    boxCode: {
+    boxSN: {
         type: Sequelize.STRING
     },
     boxIp: {//今日ip

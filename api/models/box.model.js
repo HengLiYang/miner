@@ -21,7 +21,7 @@ ModelAccountBox.addBoxMacCode = function addBoxMacCode(body) {
         return DomainBox.findAll({
             where:{
                 boxMac:data.boxMac,
-                boxCode:data.boxCode
+                boxSN:data.boxSN
             }
         }).then((array) => {
             if(array.length>0){
@@ -32,7 +32,7 @@ ModelAccountBox.addBoxMacCode = function addBoxMacCode(body) {
             }else{
                 return DomainBox.create({
                     boxMac:data.boxMac,
-                    boxCode:data.boxCode
+                    boxSN:data.boxSN
                 }).then((date)=>{
                     return {
                         isSuccess:true,
