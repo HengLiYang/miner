@@ -29,6 +29,7 @@ app.post('/promo/token', app.oauth.token());
 
 //-- authed
 app.post("/promo/authed/account/box/connect",app.oauth.authenticate(),  ControllerAccountBox.createAccountBox);//绑定设备
+app.get("/promo/authed/account/box/lists",app.oauth.authenticate(),  ControllerAccountBox.getBoxLists);//获取设备列表
 app.post("/promo/authed/account/box/disconnect",app.oauth.authenticate(),  ControllerAccountBox.delAccountBox);//解绑设备
 app.post("/promo/authed/account/coins/extract", app.oauth.authenticate(), ControllerExtractCoins.addCoinExtract);//提交提币申请
 app.get("/promo/authed/account/coins/extract/lists", app.oauth.authenticate(), ControllerExtractCoins.getCoinExtractLists);//获取提币列表

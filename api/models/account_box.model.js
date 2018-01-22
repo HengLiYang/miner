@@ -4,6 +4,7 @@ const sequelize = require('../domain/promoserver.prepare').sequelize;
 const TABLE_DEFINE = require("../domain/table.define");
 const DomainAccountBoxConnect = TABLE_DEFINE.DomainAccountBoxConnect;
 const DomainBox = TABLE_DEFINE.DomainBox;
+const DomainBoxStatus = TABLE_DEFINE.DomainBoxStatus;
 
 var ModelAccountBox = module.exports;
 
@@ -80,4 +81,28 @@ ModelAccountBox.delAccountBox = function delAccountBox(account,body) {
     });
 };
 
+//获取设备列表
+ModelAccountBox.getBoxLists = function getBoxLists(account) {
+    return DomainAccountBoxConnect.findAll({
+        where:{
+            account:account.id,
+            isBinding:true
+        }
+    }).then((array) => {
+        if(array.length>0){
+            let boxArray = array.map((box)=>{
+                return DomainBoxStatus.findOne({
+                    where:{
+                        boxSN:box.boxSN
+                    }
+                });
+            });
+            return Promise.all(boxArray).then((bxarray)=>{
+                return bxarray;
+            });
+        }else{
+            return [];
+        }
+    });
+};
 

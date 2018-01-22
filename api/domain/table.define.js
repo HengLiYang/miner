@@ -153,13 +153,15 @@ model.DomainBoxStatus = sequelize.define("t_box_status", {//盒子状态
     boxIp: {//ip
         type: Sequelize.STRING
     },
-    uplinkBandwidth:{//上行带宽 平均数
+    uplinkBandwidth:{//上行带宽
         type: Sequelize.DOUBLE,
-        field: "uplink_band_width"
+        field: "uplink_band_width",
+        defaultValue: 0
     },
     storageSize:{//存储
         type: Sequelize.DOUBLE,
-        field: "box_storage_size"
+        field: "box_storage_size",
+        defaultValue: 0
     },
     createdAt: createdAt,
     updatedAt: updatedAt
