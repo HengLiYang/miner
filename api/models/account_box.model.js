@@ -9,11 +9,11 @@ var ModelAccountBox = module.exports;
 
 //绑定设备
 ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
-    let boxCode = body.boxCode;
+    let boxSN = body.boxSN;
     //绑定设备之前是不是先查看是否有这个设备
     return DomainBox.findOne({
         where:{
-            boxCode:boxCode
+            boxSN:boxSN
         }
     }).then((oneBox)=>{
         if(oneBox == null || oneBox == undefined){
@@ -37,7 +37,6 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
                     return DomainAccountBox.create({
                         account:account.id,
                         boxSN:oneBox.boxSN,
-                        boxCode:oneBox.boxCode,
                         status:true
                     }).then((date)=>{
                         return {

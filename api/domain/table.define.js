@@ -32,7 +32,7 @@ function getDate(field) {
 
 var model = module.exports;
 
-model.DomainAccountMiner = sequelize.define("t_account_miner", {
+model.DomainAccountBox = sequelize.define("t_account_canbox", {
     account: {
         type: Sequelize.STRING,
         unique: true
@@ -45,14 +45,47 @@ model.DomainAccountMiner = sequelize.define("t_account_miner", {
         unique: true
     },
     phone: {
-        type: Sequelize.STRING,
-        unique: true
+        type: Sequelize.STRING
     },
-    accountType: {
+    gender: {
+        type: Sequelize.INTEGER
+    },
+    avatar: {
         type: Sequelize.STRING
     },
     password: {
         type: Sequelize.STRING
+    },
+    status: {
+        type: Sequelize.STRING
+    },
+    accountType: {
+        type: Sequelize.STRING,
+        field: "account_type"
+    },
+    country:{
+        type:Sequelize.STRING,
+        filed:'country'
+    },
+    firstName:{
+        type:Sequelize.STRING,
+        field:'first_name'
+    },
+    lastName:{
+        type:Sequelize.STRING,
+        field:'last_name'
+    },
+    idCardNumber:{
+        type:Sequelize.STRING,
+        field:'id_card_number'
+    },
+    receiveCanAddress:{//众筹接受地址
+        type:Sequelize.STRING,
+        field:'receive_can_address'
+    },
+    canAmount: {//众筹时候数量
+        type: Sequelize.BIGINT,
+        field: "can_amount"
     },
     totalMiningCoin:{//挖币的总数
         type: Sequelize.DOUBLE,
@@ -61,14 +94,6 @@ model.DomainAccountMiner = sequelize.define("t_account_miner", {
     remainMiningCoin:{//剩余币的总数
         type: Sequelize.DOUBLE,
         field: "remain_miningcoin"
-    },
-    wechat: {
-        type: Sequelize.STRING,
-        field: "wechat"
-    },
-    qq:{
-        type:Sequelize.STRING,
-        filed:'qq'
     },
     createdAt: createdAt,
     updatedAt: updatedAt
