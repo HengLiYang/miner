@@ -97,6 +97,11 @@ model.DomainAccountBox = sequelize.define("t_account_canbox", {
         field: "remain_miningcoin",
         defaultValue: 0
     },
+    lockingCoins:{//提币时候锁定币
+        type: Sequelize.DOUBLE,
+        field: "locking_coins",
+        defaultValue: 0
+    },
     createdAt: createdAt,
     updatedAt: updatedAt
 });
@@ -208,6 +213,10 @@ model.DomainCoinExtract = sequelize.define("t_coin_extract", {//提取币
     minerfee:{//手续费
         type: Sequelize.DOUBLE,
         field: "miner_fee"
+    },
+    actualAmount:{//实际到账
+        type: Sequelize.DOUBLE,
+        field: "actual_amount"
     },
     status:{ //状态：wait／ok/fail
         type: Sequelize.STRING,

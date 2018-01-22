@@ -28,12 +28,12 @@ app.oauth = new oauthserver({
 app.post('/promo/token', app.oauth.token());
 
 //-- authed
-// app.post("/promo/authed/account/box/connect", app.oauth.authenticate(), ControllerAccountBox.createAccountBox);//绑定设备
-app.post("/promo/authed/account/box/connect", ControllerAccountBox.createAccountBox);//绑定设备
-app.post("/promo/authed/account/box/disconnect", ControllerAccountBox.delAccountBox);//解绑设备
-app.post("/promo/authed/account/coins/extract", ControllerExtractCoins.addCoinExtract);//提交提币申请
-app.post("/promo/authed/account/coins/address/add", ControllerReceiveAddress.addReceiveAddress);//添加收币地址
-app.post("/promo/authed/account/coins/address/del", ControllerReceiveAddress.delReceiveAddress);//删除收币地址
+app.post("/promo/authed/account/box/connect",app.oauth.authenticate(),  ControllerAccountBox.createAccountBox);//绑定设备
+app.post("/promo/authed/account/box/disconnect",app.oauth.authenticate(),  ControllerAccountBox.delAccountBox);//解绑设备
+app.post("/promo/authed/account/coins/extract", app.oauth.authenticate(), ControllerExtractCoins.addCoinExtract);//提交提币申请
+app.get("/promo/authed/account/coins/extract/lists", app.oauth.authenticate(), ControllerExtractCoins.getCoinExtractLists);//获取提币列表
+app.post("/promo/authed/account/coins/address/add", app.oauth.authenticate(), ControllerReceiveAddress.addReceiveAddress);//添加收币地址
+app.post("/promo/authed/account/coins/address/del", app.oauth.authenticate(), ControllerReceiveAddress.delReceiveAddress);//删除收币地址
 //-- authed end
 
 //-- public
