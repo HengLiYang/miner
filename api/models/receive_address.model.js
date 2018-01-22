@@ -1,6 +1,6 @@
 "use strict";
 
-const sequelize = require('../domain/promominer.prepare').sequelize;
+const sequelize = require('../domain/promoserver.prepare').sequelize;
 const TABLE_DEFINE = require("../domain/table.define");
 const DomainCanReceiveAddres = TABLE_DEFINE.DomainCanReceiveAddres;
 

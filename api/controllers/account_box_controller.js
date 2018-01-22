@@ -1,7 +1,7 @@
 "use strict";
 
 const ModelAccountBox = require("../models/account_box.model");
-const redis = require('../domain/promominer.prepare').redis;
+const redis = require('../domain/promoserver.prepare').redis;
 const KEYS = require("../models/oauth2.model").KEYS;
 
 

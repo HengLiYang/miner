@@ -8,6 +8,7 @@ const ControllerBox = require("./api/controllers/box_controller");
 const ControllerAccountBox = require("./api/controllers/account_box_controller");
 const ControllerExtractCoins = require("./api/controllers/extract_coins_controller");
 const ControllerReceiveAddress = require("./api/controllers/receive_address_controller");
+const ControllerBoxMining = require("./api/controllers/box_mining_controller");
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +38,7 @@ app.post("/promo/authed/account/coins/address/del", ControllerReceiveAddress.del
 
 //-- public
 app.post('/promo/public/addbox/msg', ControllerBox.addBoxMacCode);//添加盒子的 mac/code
+app.post("/promo/public/box/everytime/mining/coins", ControllerBoxMining.addBoxMining);//删除收币地址
 //-- public end
 //-- manage
 var port = process.env.PORT || 8108;

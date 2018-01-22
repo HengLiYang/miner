@@ -1,6 +1,6 @@
-const Sequelize = require('./promominer.prepare').Sequelize;
-const sequelize = require('./promominer.prepare').sequelize;
-const redis = require('./promominer.prepare').redis;
+const Sequelize = require('./promoserver.prepare').Sequelize;
+const sequelize = require('./promoserver.prepare').sequelize;
+const redis = require('./promoserver.prepare').redis;
 const moment = require('moment');
 
 const KEYS = require("../models/oauth2.model").KEYS;
@@ -223,7 +223,7 @@ sequelize.sync({ force: false }).then(() => {
         if (accountInstance == undefined) {
             return model.DomainAccountMiner.create({
                 account: "admin",
-                password: "admin#20170829#promominer",
+                password: "admin#20170829#promoserver",
                 accountType: "admin"
             });
         } else {

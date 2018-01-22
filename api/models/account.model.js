@@ -1,7 +1,7 @@
 "use strict";
 
-const sequelize = require('../domain/promominer.prepare').sequelize;
-const redis = require('../domain/promominer.prepare').redis;
+const sequelize = require('../domain/promoserver.prepare').sequelize;
+const redis = require('../domain/promoserver.prepare').redis;
 const KEYS = require("./oauth2.model").KEYS;
 const TABLE_DEFINE = require("../domain/table.define");
 const DomainAccountBox = TABLE_DEFINE.DomainAccountBox;
