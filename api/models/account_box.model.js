@@ -25,7 +25,7 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
             return DomainAccountBox.findAll({
                 where:{
                     boxSN:oneBox.boxSN,
-                    status:true
+                    isBinding:true
                 }
             }).then((array) => {
                 if(array.length>0){
@@ -37,7 +37,7 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
                     return DomainAccountBox.create({
                         account:account.id,
                         boxSN:oneBox.boxSN,
-                        status:true
+                        isBinding:true
                     }).then((date)=>{
                         return {
                             isSuccess:true,
@@ -57,14 +57,14 @@ ModelAccountBox.delAccountBox = function delAccountBox(account,body) {
         where:{
             account:account.id,
             boxSN:boxSN,
-            status:true
+            isBinding:true
         }
     }).then((array) => {
         if(array.length>0){
             return DomainAccountBox.update({
                 account:account.id,
                 boxSN:boxSN,
-                status:false
+                isBinding:false
             }).then((date)=>{
                 return {
                     isSuccess:true,
