@@ -39,6 +39,7 @@ app.post("/promo/authed/account/coins/address/del", ControllerReceiveAddress.del
 //-- public
 app.post('/promo/public/addbox/msg', ControllerBox.addBoxMacCode);//添加盒子的 mac/code
 app.post("/promo/public/box/everytime/mining/coins", ControllerBoxMining.addBoxMining);//设备每刻的产币
+app.post("/promo/public/box/status/update", ControllerBoxMining.updateBoxStatus);//设备状态
 //设备信息开机传输
 //-- public end
 //-- manage

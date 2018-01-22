@@ -128,6 +128,15 @@ model.DomainAccountBoxConnect = sequelize.define("t_box_account", {
         type: Sequelize.BOOLEAN,
         defaultValue: false
     },
+    createdAt: createdAt,
+    updatedAt: updatedAt
+});
+
+model.DomainBoxStatus = sequelize.define("t_box_status", {//盒子状态
+    boxSN: {
+        type: Sequelize.STRING,
+        unique: true
+    },
     status: { //状态：0:未连接  1:挖矿中  2:待机中 3:异常  
         type: Sequelize.INTEGER,
         defaultValue: 0
@@ -175,14 +184,6 @@ model.DomainCoinEveryDay = sequelize.define("t_coin_everyday", {
     },
     boxIp: {//今日ip
         type: Sequelize.STRING
-    },
-    uplinkBandwidth:{//上行带宽 平均数
-        type: Sequelize.DOUBLE,
-        field: "uplink_band_width"
-    },
-    storageSize:{//存储
-        type: Sequelize.DOUBLE,
-        field: "box_storage_size"
     },
     miningCoin:{//挖币总数
         type: Sequelize.DOUBLE,

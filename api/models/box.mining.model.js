@@ -4,6 +4,7 @@ const sequelize = require('../domain/promoserver.prepare').sequelize;
 const TABLE_DEFINE = require("../domain/table.define");
 const DomainCoinEveryDay = TABLE_DEFINE.DomainCoinEveryDay;
 const DomainAccountBox = TABLE_DEFINE.DomainAccountBox;
+const DomainBoxStatus = TABLE_DEFINE.DomainBoxStatus;
 const moment = require('moment');
 var ModelBoxMining = module.exports;
 
@@ -27,8 +28,6 @@ ModelBoxMining.addBoxMining = function addBoxMining(body) {
                     account: boxaccount.account,
                     boxSN: body.boxSN,
                     boxIp:body.boxIp,
-                    uplinkBandwidth:body.uplinkBandwidth,
-                    storageSize:body.storageSize,
                     miningCoin:body.miningCoin,
                     today:today
                 }
@@ -55,6 +54,23 @@ ModelBoxMining.addBoxMining = function addBoxMining(body) {
                     });
                 }
             });
+        }
+    });
+};
+
+//盒子 状态
+ModelBoxMining.updateBoxStatus = function updateBoxStatus(body) {
+    return DomainBoxStatus.upsert(body).then((data)=>{
+        if(data > 0){
+            return {
+                isSuccess:true,
+                reason:"插入成功"
+            };
+        }else{
+            return {
+                isSuccess:false,
+                reason:"插入失败"
+            };
         }
     });
 };
