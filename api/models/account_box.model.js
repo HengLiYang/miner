@@ -2,7 +2,7 @@
 
 const sequelize = require('../domain/promoserver.prepare').sequelize;
 const TABLE_DEFINE = require("../domain/table.define");
-const DomainAccountBox = TABLE_DEFINE.DomainAccountBox;
+const DomainAccountBoxConnect = TABLE_DEFINE.DomainAccountBoxConnect;
 const DomainBox = TABLE_DEFINE.DomainBox;
 
 var ModelAccountBox = module.exports;
@@ -22,7 +22,7 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
                 reason:"没有此设备"
             };
         }else{
-            return DomainAccountBox.findAll({
+            return DomainAccountBoxConnect.findAll({
                 where:{
                     boxSN:oneBox.boxSN,
                     isBinding:true
@@ -34,7 +34,7 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
                         reason:"已被其他账户绑定"
                     };
                 }else{
-                    return DomainAccountBox.create({
+                    return DomainAccountBoxConnect.create({
                         account:account.id,
                         boxSN:oneBox.boxSN,
                         isBinding:true
@@ -53,7 +53,7 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
 //解除绑定设备
 ModelAccountBox.delAccountBox = function delAccountBox(account,body) {
     let boxSN = body.boxSN;
-    return DomainAccountBox.findAll({
+    return DomainAccountBoxConnect.findAll({
         where:{
             account:account.id,
             boxSN:boxSN,
@@ -61,7 +61,7 @@ ModelAccountBox.delAccountBox = function delAccountBox(account,body) {
         }
     }).then((array) => {
         if(array.length>0){
-            return DomainAccountBox.update({
+            return DomainAccountBoxConnect.update({
                 account:account.id,
                 boxSN:boxSN,
                 isBinding:false

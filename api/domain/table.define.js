@@ -89,11 +89,13 @@ model.DomainAccountBox = sequelize.define("t_account_canbox", {
     },
     totalMiningCoin:{//挖币的总数
         type: Sequelize.DOUBLE,
-        field: "total_miningcoin"
+        field: "total_miningcoin",
+        defaultValue: 0
     },
     remainMiningCoin:{//剩余币的总数
         type: Sequelize.DOUBLE,
-        field: "remain_miningcoin"
+        field: "remain_miningcoin",
+        defaultValue: 0
     },
     createdAt: createdAt,
     updatedAt: updatedAt
@@ -115,7 +117,7 @@ model.DomainBox = sequelize.define("t_box", {
     updatedAt: updatedAt
 });
 
-model.DomainAccountBox = sequelize.define("t_box_account", {
+model.DomainAccountBoxConnect = sequelize.define("t_box_account", {
     account: {
         type: Sequelize.STRING
     },
@@ -219,14 +221,15 @@ model.DomainCoinExtract = sequelize.define("t_coin_extract", {//提取币
 });
 
 sequelize.sync({ force: false }).then(() => {
-    model.DomainAccountMiner.findOne().then((accountInstance) => {
+    model.DomainAccountBox.findOne().then((accountInstance) => {
         if (accountInstance == undefined) {
-            return model.DomainAccountMiner.create({
+            return model.DomainAccountBox.create({
                 account: "admin",
-                password: "admin#20170829#promoserver",
+                appellation: "admin",
+                password: "admin#20170829#ubc",
                 accountType: "admin"
             });
-        } else {
+        }else {
             return accountInstance;
         }
     }).then((accountInstance) => {

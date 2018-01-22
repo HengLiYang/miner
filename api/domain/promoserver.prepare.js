@@ -30,7 +30,7 @@ require('pg').types.setTypeParser(1114, stringValue => {
 
 redis.hmset(`${KEYS.client}${APP}`, {
     clientId: APP,
-    clientSecret: 'e6197205ba6f9078'
+    clientSecret: 'e6197205ba6f9c6'
 });
 const CONFIG = {
 
