@@ -208,7 +208,7 @@ model.DomainCoinExtract = sequelize.define("t_coin_extract", {//提取币
         type: Sequelize.DOUBLE,
         field: "miner_fee"
     },
-    status:{ //状态：wait／ok
+    status:{ //状态：wait／ok/fail
         type: Sequelize.STRING,
         field: "extract_status"
     },
