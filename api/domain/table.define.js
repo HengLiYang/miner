@@ -97,6 +97,11 @@ model.DomainAccountBox = sequelize.define("t_account_canbox", {
         field: "remain_miningcoin",
         defaultValue: 0
     },
+    lockingCoins:{//提币时候锁定币
+        type: Sequelize.DOUBLE,
+        field: "locking_coins",
+        defaultValue: 0
+    },
     createdAt: createdAt,
     updatedAt: updatedAt
 });
@@ -128,6 +133,15 @@ model.DomainAccountBoxConnect = sequelize.define("t_box_account", {
         type: Sequelize.BOOLEAN,
         defaultValue: false
     },
+    createdAt: createdAt,
+    updatedAt: updatedAt
+});
+
+model.DomainBoxStatus = sequelize.define("t_box_status", {//盒子状态
+    boxSN: {
+        type: Sequelize.STRING,
+        unique: true
+    },
     status: { //状态：0:未连接  1:挖矿中  2:待机中 3:异常  
         type: Sequelize.INTEGER,
         defaultValue: 0
@@ -139,13 +153,15 @@ model.DomainAccountBoxConnect = sequelize.define("t_box_account", {
     boxIp: {//ip
         type: Sequelize.STRING
     },
-    uplinkBandwidth:{//上行带宽 平均数
+    uplinkBandwidth:{//上行带宽
         type: Sequelize.DOUBLE,
-        field: "uplink_band_width"
+        field: "uplink_band_width",
+        defaultValue: 0
     },
     storageSize:{//存储
         type: Sequelize.DOUBLE,
-        field: "box_storage_size"
+        field: "box_storage_size",
+        defaultValue: 0
     },
     createdAt: createdAt,
     updatedAt: updatedAt
@@ -176,14 +192,6 @@ model.DomainCoinEveryDay = sequelize.define("t_coin_everyday", {
     boxIp: {//今日ip
         type: Sequelize.STRING
     },
-    uplinkBandwidth:{//上行带宽 平均数
-        type: Sequelize.DOUBLE,
-        field: "uplink_band_width"
-    },
-    storageSize:{//存储
-        type: Sequelize.DOUBLE,
-        field: "box_storage_size"
-    },
     miningCoin:{//挖币总数
         type: Sequelize.DOUBLE,
         field: "mining_coin"
@@ -208,7 +216,11 @@ model.DomainCoinExtract = sequelize.define("t_coin_extract", {//提取币
         type: Sequelize.DOUBLE,
         field: "miner_fee"
     },
-    status:{ //状态：wait／ok
+    actualAmount:{//实际到账
+        type: Sequelize.DOUBLE,
+        field: "actual_amount"
+    },
+    status:{ //状态：wait／ok/fail
         type: Sequelize.STRING,
         field: "extract_status"
     },

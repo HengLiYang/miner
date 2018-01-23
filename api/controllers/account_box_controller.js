@@ -31,3 +31,15 @@ ControllerAccountBox.delAccountBox = function delAccountBox(req, res){
         res.json(error);
     });
 };
+
+//获取设备列表
+ControllerAccountBox.getBoxLists = function getBoxLists(req, res){
+    let account = res.locals.oauth.token.user;
+    ModelAccountBox.getBoxLists(account).then((data) => {
+        res.status(200);
+        res.json(data);
+    }).catch((error) => {
+        res.status(500);
+        res.json(error);
+    });
+};
