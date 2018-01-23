@@ -2,10 +2,12 @@
 
 const sequelize = require('../domain/promoserver.prepare').sequelize;
 const TABLE_DEFINE = require("../domain/table.define");
+const DomainAccountBox = TABLE_DEFINE.DomainAccountBox;
 const DomainAccountBoxConnect = TABLE_DEFINE.DomainAccountBoxConnect;
 const DomainBox = TABLE_DEFINE.DomainBox;
 const DomainBoxStatus = TABLE_DEFINE.DomainBoxStatus;
-
+const DomainCoinEveryDay = TABLE_DEFINE.DomainCoinEveryDay;
+const moment = require('moment');
 var ModelAccountBox = module.exports;
 
 //绑定设备
@@ -106,3 +108,70 @@ ModelAccountBox.getBoxLists = function getBoxLists(account) {
     });
 };
 
+function getBoxCoins(domainCoinEveryDay){
+    var allcoins = 0;
+    domainCoinEveryDay.forEach(element => {
+        allcoins += element.miningCoin;
+    });
+    return allcoins;
+};
+//挖矿统计
+ModelAccountBox.getStatistics = function getStatistics(account) {
+    return DomainAccountBoxConnect.findAll({
+        where:{
+            account:account.id,
+            isBinding:true
+        }
+    }).then((array) => {
+        let boxArray = array.map((box)=>{
+            return DomainBoxStatus.findOne({
+                where:{
+                    '$or':[
+                        {
+                            boxSN:box.boxSN,
+                            status:1
+                        },
+                        {
+                            boxSN:box.boxSN,
+                            status:2
+                        }
+                    ]
+                }
+            });
+        });
+        return Promise.all(boxArray).then((bxarray)=>{
+            let todayStr = moment().format('YYYY-MM-DD');
+            let yesterdayStr = moment().subtract(1, 'days').format('YYYY-MM-DD');
+            return Promise.all([
+                DomainCoinEveryDay.findAll({
+                    where: {
+                        account:account.id,
+                        today: todayStr
+                    }
+                }),
+                DomainCoinEveryDay.findAll({
+                    where: {
+                        account:account.id,
+                        today: yesterdayStr
+                    }
+                })
+            ]).then((arrayCoin)=>{
+                let allTodayCoins = getBoxCoins(arrayCoin[0]);
+                let allYesterdayCoins = getBoxCoins(arrayCoin[1]);
+                return DomainAccountBox.findOne({
+                    where: {
+                        account:account.id
+                    }
+                }).then((accountbox)=>{
+                    return {
+                        onLineBox:bxarray.length,
+                        allBox:array.length,
+                        allYesterdayCoins:allYesterdayCoins,
+                        allTodayCoins:allTodayCoins,
+                        totalMiningCoin:accountbox.totalMiningCoin
+                    };
+                });
+            });
+        });
+    });
+};

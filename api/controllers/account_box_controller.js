@@ -43,3 +43,15 @@ ControllerAccountBox.getBoxLists = function getBoxLists(req, res){
         res.json(error);
     });
 };
+
+//挖矿统计
+ControllerAccountBox.getStatistics = function getStatistics(req, res){
+    let account = res.locals.oauth.token.user;
+    ModelAccountBox.getStatistics(account).then((data) => {
+        res.status(200);
+        res.json(data);
+    }).catch((error) => {
+        res.status(500);
+        res.json(error);
+    });
+};

@@ -18,9 +18,8 @@ ControllerExtractCoins.addCoinExtract = function addCoinExtract(req, res){
 
 //提币列表
 ControllerExtractCoins.getCoinExtractLists = function getCoinExtractLists(req, res){
-    let body = req.body;
     let account = res.locals.oauth.token.user;
-    ModelExtractCoins.getCoinExtractLists(account,body).then((data) => {
+    ModelExtractCoins.getCoinExtractLists(account).then((data) => {
         res.status(200);
         res.json(data);
     }).catch((error) => {
