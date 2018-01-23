@@ -55,3 +55,18 @@ ControllerAccountBox.getStatistics = function getStatistics(req, res){
         res.json(error);
     });
 };
+
+//停止／开始挖矿
+ControllerAccountBox.changeBoxMining = function changeBoxMining(req, res){
+    let account = res.locals.oauth.token.user;
+    let boxSN = req.params.boxSN;
+    let isMining = req.params.isMining;
+    //这里需要做 与设备的交互？
+    ModelAccountBox.changeBoxMining(account,boxSN,isMining).then((data) => {
+        res.status(200);
+        res.json(data);
+    }).catch((error) => {
+        res.status(500);
+        res.json(error);
+    });
+};
