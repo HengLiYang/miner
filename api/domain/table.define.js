@@ -45,7 +45,8 @@ model.DomainAccountBox = sequelize.define("t_account_canbox", {
         unique: true
     },
     phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
     },
     gender: {
         type: Sequelize.INTEGER
@@ -142,7 +143,7 @@ model.DomainBoxStatus = sequelize.define("t_box_status", {//盒子状态
         type: Sequelize.STRING,
         unique: true
     },
-    status: { //状态：0:未连接  1:挖矿中  2:待机中 3:异常  
+    status: { //状态：0:未连接  1:挖矿中  2:待机中 3:异常
         type: Sequelize.INTEGER,
         defaultValue: 0
     },
