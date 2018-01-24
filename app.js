@@ -9,9 +9,31 @@ const ControllerAccountBox = require("./api/controllers/account_box_controller")
 const ControllerExtractCoins = require("./api/controllers/extract_coins_controller");
 const ControllerReceiveAddress = require("./api/controllers/receive_address_controller");
 const ControllerBoxMining = require("./api/controllers/box_mining_controller");
+const ControllerResetPassword = require('./api/controllers/reset_password_controller');
+
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+/**
+ * enable session
+ * 用于`找回密码`相关逻辑
+ * 假设找回密码时还没有`access token`
+ */
+const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const prepare = require('./api/domain/promoserver.prepare');
+
+app.use(session({
+    store: new RedisStore({
+        client: prepare.redis
+    }),
+    secret: ["zwJqA$#NU*F7", "S@#^k3ScmP23"],
+    resave: false,
+    cookie: {
+        maxAge: 7 * 86400 * 1000
+    }
+}));
 
 app.use(function(req, res, next){
   let method = req.method,
@@ -24,6 +46,24 @@ app.use(function(req, res, next){
 app.oauth = new oauthserver({
     model: require('./api/models/oauth2.model')
 });
+
+/**
+ * 找回密码
+ * step 1: 发送短信验证码
+ */
+app.post('/promo/resetpassword/sendcode', ControllerResetPassword.countdowning, ControllerResetPassword.sendSMSCode);
+
+/**
+ * 找回密码
+ * step 2: 校验短信验证码
+ */
+app.post('/promo/resetpassword/verifycode', ControllerResetPassword.verifySMSCode);
+
+/**
+ * 找回密码
+ * step 3: 重置密码
+ */
+app.post('/promo/resetpassword', ControllerResetPassword.resetPassword);
 
 app.post('/promo/token', app.oauth.token());
 app.post('/promo/public/account', ControllerAccount.createPromoAccount);

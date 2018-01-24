@@ -34,3 +34,47 @@ ModelAccount.getUserAccount = function getUserAccount(account){
     });
 }
 
+/**
+ * 通过手机号查找用户
+ *
+ * @param  {String} phone   手机号
+ * @return {Object}         用户是否存在
+ */
+ModelAccount.existUserByPhone = function existUserByPhone(phone) {
+    return DomainAccountBox.count({
+        where: {
+            phone: phone
+        }
+    });
+};
+
+/**
+ * 通过邮箱查找用户
+ *
+ * @param  {String} email   邮箱
+ * @return {Object}         用户是否存在
+ */
+ModelAccount.existUserByEmail = function existUserByEmail(email) {
+    return DomainAccountBox.count({
+        where: {
+            email: email
+        }
+    });
+};
+
+/**
+ * 修改用户密码
+ *
+ * @param  {String} user            用户标识
+ * @param  {String} newPassword     新密码
+ * @return {[type]}
+ */
+ModelAccount.resetPassword = function resetPassword(user, newPassword) {
+    return DomainAccountBox.update({
+        password: newPassword
+    }, {
+        where: {
+            phone: user
+        }
+    });
+};
