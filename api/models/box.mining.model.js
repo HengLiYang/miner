@@ -60,17 +60,11 @@ ModelBoxMining.addBoxMining = function addBoxMining(body) {
 
 //盒子 状态
 ModelBoxMining.updateBoxStatus = function updateBoxStatus(body) {
-    return DomainBoxStatus.upsert(body).then((data)=>{
-        if(data > 0){
-            return {
-                isSuccess:true,
-                reason:"插入成功"
-            };
-        }else{
-            return {
-                isSuccess:false,
-                reason:"插入失败"
-            };
-        }
-    });
+    return DomainBoxStatus.insertOrUpdate(body).then(()=>{
+        return {
+            isSuccess:true,
+            reason:"插入成功"
+        };
+    }).catch((error) => {
+    })
 };

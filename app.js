@@ -26,7 +26,7 @@ app.oauth = new oauthserver({
 });
 
 app.post('/promo/token', app.oauth.token());
-
+app.post('/promo/public/account', ControllerAccount.createPromoAccount);
 //-- authed
 app.post("/promo/authed/account/box/connect",app.oauth.authenticate(),  ControllerAccountBox.createAccountBox);//绑定设备
 app.get("/promo/authed/account/box/lists",app.oauth.authenticate(),  ControllerAccountBox.getBoxLists);//获取设备列表

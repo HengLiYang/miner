@@ -34,7 +34,7 @@ ModelAccountBox.createAccountBox = function createAccountBox(account,body) {
                 if(array.length>0){
                     return {
                         isSuccess:false,
-                        reason:"已被其他账户绑定"
+                        reason:"已绑定或被其他账户绑定"
                     };
                 }else{
                     return DomainAccountBoxConnect.create({
@@ -64,10 +64,17 @@ ModelAccountBox.delAccountBox = function delAccountBox(account,body) {
         }
     }).then((array) => {
         if(array.length>0){
-            return DomainAccountBoxConnect.update({
-                account:account.id,
-                boxSN:boxSN,
-                isBinding:false
+            return DomainAccountBoxConnect.update(
+                {
+                    account:account.id,
+                    boxSN:boxSN,
+                    isBinding:false
+                },{
+                where:{
+                    account:account.id,
+                    boxSN:boxSN,
+                    isBinding:true
+                }
             }).then((date)=>{
                 return {
                     isSuccess:true,
