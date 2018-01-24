@@ -205,7 +205,7 @@ ModelAccountBox.getStatistics = function getStatistics(account) {
 };
 
 //停止/开始挖矿
-function changeBoxMining(account,boxSN,isMining){
+ModelAccountBox.changeBoxMining  = function changeBoxMining(account,boxSN,isMining){
     return DomainBoxStatus.update(
         {
             isMining:isMining
