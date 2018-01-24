@@ -4,7 +4,7 @@ const ModelBox = require("../models/box.model");
 
 var ControllerBox = module.exports;
 //添加设备信息
-ControllerBox.addBoxMacCode = function addBoxMacCode(req, res){
+ControllerBox.addBoxMacSN = function addBoxMacSN(req, res){
     let body = req.body;
     ModelBox.addBoxMacCode(body).then((data) => {
         res.status(200);

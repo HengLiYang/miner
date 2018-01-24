@@ -30,6 +30,7 @@ app.post('/promo/token', app.oauth.token());
 //-- authed
 app.post("/promo/authed/account/box/connect",app.oauth.authenticate(),  ControllerAccountBox.createAccountBox);//绑定设备
 app.get("/promo/authed/account/box/lists",app.oauth.authenticate(),  ControllerAccountBox.getBoxLists);//获取设备列表
+app.get("/promo/authed/account/box/search/:boxSN",app.oauth.authenticate(),  ControllerAccountBox.searchBoxUseSn);//搜索设备
 app.post("/promo/authed/account/box/disconnect",app.oauth.authenticate(),  ControllerAccountBox.delAccountBox);//解绑设备
 app.get("/promo/authed/account/box/stop/mining/:boxSN/:isMining",app.oauth.authenticate(),  ControllerAccountBox.changeBoxMining);//停止/开始挖矿
 app.post("/promo/authed/account/allbox/statistics ",app.oauth.authenticate(),  ControllerAccountBox.getStatistics);//挖矿统计
@@ -40,7 +41,7 @@ app.post("/promo/authed/account/coins/address/del", app.oauth.authenticate(), Co
 //-- authed end
 
 //-- public
-app.post('/promo/public/addbox/msg', ControllerBox.addBoxMacCode);//添加盒子的 mac/code
+app.post('/promo/public/addbox/msg', ControllerBox.addBoxMacSN);//添加盒子的 mac/sn
 app.post("/promo/public/box/everytime/mining/coins", ControllerBoxMining.addBoxMining);//设备每刻的产币
 app.post("/promo/public/box/status/update", ControllerBoxMining.updateBoxStatus);//设备状态
 //设备信息开机传输

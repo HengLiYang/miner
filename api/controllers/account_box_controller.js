@@ -44,6 +44,18 @@ ControllerAccountBox.getBoxLists = function getBoxLists(req, res){
     });
 };
 
+//搜索设备
+ControllerAccountBox.searchBoxUseSn = function searchBoxUseSn(req, res){
+    let account = res.locals.oauth.token.user;
+    let boxSN = req.params.boxSN;
+    ModelAccountBox.searchBoxUseSn(account,boxSN).then((data) => {
+        res.status(200);
+        res.json(data);
+    }).catch((error) => {
+        res.status(500);
+        res.json(error);
+    });
+};
 //挖矿统计
 ControllerAccountBox.getStatistics = function getStatistics(req, res){
     let account = res.locals.oauth.token.user;

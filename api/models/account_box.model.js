@@ -83,6 +83,27 @@ ModelAccountBox.delAccountBox = function delAccountBox(account,body) {
     });
 };
 
+//搜索设备
+ModelAccountBox.searchBoxUseSn = function searchBoxUseSn(account,boxSN) {
+    return DomainAccountBoxConnect.findOne({
+        where:{
+            account:account.id,
+            isBinding:true,
+            boxSN:boxSN
+        }
+    }).then((box) => {
+        if(box == null || box == undefined){
+            return {};
+        }else{
+            return DomainBoxStatus.findOne({
+                where:{
+                    boxSN:boxSN
+                }
+            });
+        }
+    });
+};
+
 //获取设备列表
 ModelAccountBox.getBoxLists = function getBoxLists(account) {
     return DomainAccountBoxConnect.findAll({
