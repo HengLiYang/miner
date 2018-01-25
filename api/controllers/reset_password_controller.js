@@ -149,15 +149,11 @@ exports.sendSMSCode = function (req, res) {
             redis.setexAsync(live, LIMIT_CODE_TTL, code).catch(() => {})
 
             // 请求阿里云
-            // return smsClient.sendSMS({
-            //     PhoneNumbers: phone,
-            //     SignName: 'MobiPromo官网',
-            //     TemplateCode: 'SMS_116770261',
-            //     TemplateParam: '{"code": ' + code + '}'
-            // })
-            return Promise.resolve({
-                Code: "OK",
-                Message: "OK"
+            return smsClient.sendSMS({
+                PhoneNumbers: phone,
+                SignName: 'MobiPromo官网',
+                TemplateCode: 'SMS_116770261',
+                TemplateParam: '{"code": ' + code + '}'
             }).catch(err => {
                 // 短信发送失败
                 // 还原限制计数
@@ -268,9 +264,8 @@ exports.resetPassword = function (req, res) {
 
     res.status(500);
     if (!user || !verified || moment().isAfter(verified)) {
-        console.log(req.session);
         delete req.session.verified;
-        console.log(req.session);
+
         res.json({
             code: 11000,
             message: "请输入有效用账户信息"
