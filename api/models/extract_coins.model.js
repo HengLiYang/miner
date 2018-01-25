@@ -73,25 +73,32 @@ ModelCoinExtract.delCoinExtract = function delCoinExtract(account,body){
             account:account.id,
             status:"wait"
         }
-    }).then(()=>{
-        return DomainCoinExtract.findOne({
-            where:{
-                id:body.id,
-                account:account.id
-            }
-        }).then((data)=>{
-            return DomainAccountBox.findOne({
+    }).then((backData)=>{
+        if(backData>0){
+            return DomainCoinExtract.findOne({
                 where:{
+                    id:body.id,
                     account:account.id
                 }
-            }).then((boxAccount)=>{
-                return boxAccount.increment({remainMiningCoin:data.amount,
-                    lockingCoins: -data.amount}).then((data)=>{
-                    return {
-                        isSuccess:true
-                    };
+            }).then((data)=>{
+                return DomainAccountBox.findOne({
+                    where:{
+                        account:account.id
+                    }
+                }).then((boxAccount)=>{
+                    return boxAccount.increment({remainMiningCoin:data.amount,
+                        lockingCoins: -data.amount}).then((data)=>{
+                        return {
+                            isSuccess:true
+                        };
+                    });
                 });
             });
-        });
+        }else{
+            return {
+                isSuccess:false,
+                reason:"您已经撤销过或者不可撤销"
+            };
+        }
     });
 };
