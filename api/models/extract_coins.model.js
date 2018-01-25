@@ -18,7 +18,7 @@ ModelCoinExtract.addCoinExtract = function addCoinExtract(account,body) {
         }
     }).then((accountData)=>{
         //这里 假定 手续费在这次提币中扣除
-        if(accountData.remainMiningCoin >= (body.amount+body.minerfee)){
+        if(accountData.remainMiningCoin*1.0 >= (body.amount*1.0+body.minerfee*1.0)){
             return DomainCoinExtract.create({
                 account:account.id,
                 amount:body.amount,
@@ -26,27 +26,21 @@ ModelCoinExtract.addCoinExtract = function addCoinExtract(account,body) {
                 status:"wait",
                 actualAmount:body.amount - body.minerfee,
                 canReceiveAddress:body.canReceiveAddress
-            }).then((data)=>{
+            }).then(()=>{
                 //更新主账户 剩余币／锁定币
-                return DomainAccountBox.update(
-                    {
-                        remainMiningCoin:accountData.remainMiningCoin - body.amount,
-                        lockingCoins: accountData.lockingCoins + body.amount
-                    },{
+                return DomainAccountBox.findOne({
                     where:{
                         account:account.id
                     }
-                }).then((data)=>{
-                    if(data>0){
+                }).then((boxAccount)=>{
+                    return boxAccount.increment({remainMiningCoin:-body.amount,
+                        lockingCoins: body.amount}).then((data)=>{
                         return {
                             isSuccess:true
                         };
-                    }else{
-                        return {
-                            isSuccess:false,
-                            reason:"更新数据出现错误"
-                        };
-                    }
+                    });
+                    
+                    
                 });
             });
         }else{
