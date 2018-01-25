@@ -9,7 +9,6 @@ var ModelCoinExtract = module.exports;
 
 // 提取币
 ModelCoinExtract.addCoinExtract = function addCoinExtract(account,body) {
-    let isArray = body.isArray;
     let data = body.allData;
     
     //这里验证下，可以提取的数量是否超出余额
