@@ -39,8 +39,6 @@ ModelCoinExtract.addCoinExtract = function addCoinExtract(account,body) {
                             isSuccess:true
                         };
                     });
-                    
-                    
                 });
             });
         }else{
@@ -61,5 +59,39 @@ ModelCoinExtract.getCoinExtractLists = function getCoinExtractLists(account) {
         }
     }).then((dataArray)=>{
         return dataArray;
+    });
+};
+
+// 取消提取币
+ModelCoinExtract.delCoinExtract = function delCoinExtract(account,body){
+    return DomainCoinExtract.update(
+        {
+            status:"fail"
+        },{
+        where:{
+            id:body.id,
+            account:account.id,
+            status:"wait"
+        }
+    }).then(()=>{
+        return DomainCoinExtract.findOne({
+            where:{
+                id:body.id,
+                account:account.id
+            }
+        }).then((data)=>{
+            return DomainAccountBox.findOne({
+                where:{
+                    account:account.id
+                }
+            }).then((boxAccount)=>{
+                return boxAccount.increment({remainMiningCoin:data.amount,
+                    lockingCoins: -data.amount}).then((data)=>{
+                    return {
+                        isSuccess:true
+                    };
+                });
+            });
+        });
     });
 };

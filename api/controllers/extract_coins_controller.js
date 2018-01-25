@@ -28,3 +28,16 @@ ControllerExtractCoins.getCoinExtractLists = function getCoinExtractLists(req, r
         res.json(error);
     });
 };
+
+//取消提币
+ControllerExtractCoins.delCoinExtract = function delCoinExtract(req, res){
+    let account = res.locals.oauth.token.user;
+    let body = req.body;
+    ModelExtractCoins.delCoinExtract(account,body).then((data) => {
+        res.status(200);
+        res.json(data);
+    }).catch((error) => {
+        res.status(500);
+        res.json(error);
+    });
+};

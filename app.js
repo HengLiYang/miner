@@ -75,6 +75,7 @@ app.post("/promo/authed/account/box/disconnect",app.oauth.authenticate(),  Contr
 app.get("/promo/authed/account/box/stop/mining/:boxSN/:isMining",app.oauth.authenticate(),  ControllerAccountBox.changeBoxMining);//停止/开始挖矿
 app.get("/promo/authed/account/allbox/statistics",app.oauth.authenticate(),  ControllerAccountBox.getStatistics);//挖矿统计
 app.post("/promo/authed/account/coins/extract", app.oauth.authenticate(), ControllerExtractCoins.addCoinExtract);//提交提币申请
+app.post("/promo/authed/account/coins/extract/del", app.oauth.authenticate(), ControllerExtractCoins.delCoinExtract);//撤销提币申请
 app.get("/promo/authed/account/coins/extract/lists", app.oauth.authenticate(), ControllerExtractCoins.getCoinExtractLists);//获取提币列表
 app.post("/promo/authed/account/coins/address/add", app.oauth.authenticate(), ControllerReceiveAddress.addReceiveAddress);//添加收币地址
 app.post("/promo/authed/account/coins/address/del", app.oauth.authenticate(), ControllerReceiveAddress.delReceiveAddress);//删除收币地址

@@ -194,8 +194,8 @@ ModelAccountBox.getStatistics = function getStatistics(account) {
                     return {
                         onLineBox:bxarray.length,
                         allBox:array.length,
-                        allYesterdayCoins:allYesterdayCoins.toFixed(2),
-                        allTodayCoins:allTodayCoins.toFixed(2),
+                        allYesterdayCoins:allYesterdayCoins,
+                        allTodayCoins:allTodayCoins,
                         totalMiningCoin:accountbox.totalMiningCoin.toFixed(2)
                     };
                 });
