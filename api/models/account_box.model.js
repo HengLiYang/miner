@@ -137,11 +137,11 @@ ModelAccountBox.getBoxLists = function getBoxLists(account) {
 };
 
 function getBoxCoins(domainCoinEveryDay){
-    var allcoins = 0;
+    var allcoins = 0.0;
     domainCoinEveryDay.forEach(element => {
-        allcoins += element.miningCoin;
+        allcoins += Number(element.miningCoin);
     });
-    return allcoins;
+    return allcoins.toFixed(2);
 };
 //挖矿统计
 ModelAccountBox.getStatistics = function getStatistics(account) {
@@ -194,9 +194,9 @@ ModelAccountBox.getStatistics = function getStatistics(account) {
                     return {
                         onLineBox:bxarray.length,
                         allBox:array.length,
-                        allYesterdayCoins:allYesterdayCoins,
-                        allTodayCoins:allTodayCoins,
-                        totalMiningCoin:accountbox.totalMiningCoin
+                        allYesterdayCoins:allYesterdayCoins.toFixed(2),
+                        allTodayCoins:allTodayCoins.toFixed(2),
+                        totalMiningCoin:accountbox.totalMiningCoin.toFixed(2)
                     };
                 });
             });
